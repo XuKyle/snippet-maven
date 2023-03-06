@@ -1,0 +1,32 @@
+<!--
+   id为assembly id。
+   format指定assembly的格式，包括jar/war/dir/tar/zip等。
+   includeBaseDirectory表示在最终生成的archive中是否包含base path，
+    若为true，将包含assembly name为名称的base path；
+    若为false，则解压archive内容到当前目录，默认为true。
+fileSets中包含多个fileSet用来指定在生成的assembly archive中包含的内容，
+    下例将包含/bin目录，assembly/Dockerfile以及server-jars目录到生成的包中。-->
+<assembly>
+    <id>maven-assembly</id>
+    <baseDirectory>assembly-demo</baseDirectory>
+    <formats>
+        <format>tar.gz</format><!--打包的文件格式,也可以有：war zip-->
+    </formats>
+    <!--tar.gz压缩包下是否生成和项目名相同的根目录-->
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <dependencySets>
+        <dependencySet>
+            <!--是否把本项目添加到依赖文件夹下-->
+            <useProjectArtifact>true</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <!--将scope为runtime的依赖包打包-->
+            <scope>runtime</scope>
+        </dependencySet>
+    </dependencySets>
+    <fileSets>
+        <fileSet>
+            <directory>src/main/bin</directory>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>
